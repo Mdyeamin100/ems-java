@@ -13,13 +13,13 @@ public class Main {
             System.out.println("2. View All Students");
             System.out.println("3. Update Student");
             System.out.println("4. Delete Student");
-            System.out.println("5. Exit");
+            System.out.println("5. Optimize/Validate Student Login");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = -1;
             try {
                 String input = scanner.nextLine();
-                // Handle empty input gracefully
                 if (input.trim().isEmpty()) continue;
                 choice = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -35,6 +35,8 @@ public class Main {
                     String name = scanner.nextLine();
                     System.out.print("Enter Email: ");
                     String email = scanner.nextLine();
+                    System.out.print("Enter Password: ");
+                    String password = scanner.nextLine();
                     System.out.print("Enter GPA: ");
                     double gpa = 0.0;
                     try {
@@ -42,7 +44,7 @@ public class Main {
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid GPA. setting to 0.0");
                     }
-                    studentManager.addStudent(new Student(id, name, email, gpa));
+                    studentManager.addStudent(new Student(id, name, email, gpa, password));
                     break;
                 case 2:
                     studentManager.viewAllStudents();
@@ -73,6 +75,17 @@ public class Main {
                     studentManager.deleteStudent(deleteId);
                     break;
                 case 5:
+                    System.out.print("Enter Student ID: ");
+                    String authId = scanner.nextLine();
+                    System.out.print("Enter Password: ");
+                    String authPass = scanner.nextLine();
+                    if (studentManager.authenticateStudent(authId, authPass)) {
+                        System.out.println("Authentication Successful! Access Granted.");
+                    } else {
+                        System.out.println("Authentication Failed. Invalid ID or Password.");
+                    }
+                    break;
+                case 6:
                     System.out.println("Exiting...");
                     scanner.close();
                     return;

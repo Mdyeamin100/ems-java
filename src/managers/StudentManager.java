@@ -59,4 +59,12 @@ public class StudentManager {
         System.out.println("Student not found.");
         return false;
     }
+
+    public boolean authenticateStudent(String id, String password) {
+        Student student = getStudent(id);
+        if (student != null && student.getPassword().equals(password)) {
+            return true;
+        }
+        return false;
+    }
 }
